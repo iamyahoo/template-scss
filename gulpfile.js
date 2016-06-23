@@ -1,6 +1,6 @@
 'use strict';
 
-//npm i --save-dev gulp gulp-watch gulp-autoprefixer gulp-uglify gulp-sass gulp-sourcemaps gulp-rigger gulp-minify-css gulp-csscomb gulp-imagemin imagemin-pngquant browser-sync rimraf
+//npm i --save-dev gulp gulp-watch gulp-autoprefixer gulp-uglify gulp-sass gulp-sourcemaps gulp-rigger gulp-minify-css gulp-csscomb gulp-imagemin imagemin-pngquant browser-sync rimraf gulp-typograf
 
 var gulp = require('gulp'),
     watch = require('gulp-watch'),
@@ -14,41 +14,45 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     browserSync = require("browser-sync"),
+    typograf = require('gulp-typograf'),
     rimraf = require('rimraf'),
     reload = browserSync.reload;
 
 var path = {
     build: {
-        html: 'build/',
-        js: 'build/js/',
-        css: 'build/css/',
-        img: 'build/img/',
-        fonts: 'build/fonts/'
+        html: 'web/',
+        js: 'web/js/',
+        libs: 'web/js/libs',
+        css: 'web/css/',
+        img: 'web/img/',
+        fonts: 'web/fonts/'
     },
     src: {
         html: 'src/*.html',
         js: 'src/js/main.js',
+        libs: 'src/js/libs/**/*.*',
         style: 'src/sass/main.scss',
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
     watch: {
         html: 'src/**/*.html',
-        js: 'src/js/**/*.js',
+        js: 'src/js/**/*.*',
+        libs: 'src/js/libs/**/*.*',
         style: 'src/sass/**/*.scss',
         img: 'src/img/**/*.*',
         fonts: 'src/fonts/**/*.*'
     },
-    clean: './build'
+    clean: './web'
 };
 
 var config = {
     server: {
-        baseDir: "./build"
+        baseDir: "./web"
     },
     tunnel: false,
     host: 'localhost',
-    port: 9000,
+    port: 9005,
     logPrefix: "dev"
 };
 
@@ -63,6 +67,7 @@ gulp.task('clean', function (cb) {
 gulp.task('html:build', function () {
     gulp.src(path.src.html)
         .pipe(rigger())
+        .pipe(typograf({lang: 'ru'}))
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
@@ -106,6 +111,11 @@ gulp.task('image:build', function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('libs:build', function() {
+    return gulp.src(path.src.libs)
+        .pipe(gulp.dest(path.build.libs))
+});
+
 gulp.task('fonts:build', function() {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.build.fonts))
@@ -115,7 +125,15 @@ gulp.task('build', [
     'html:build',
     'style:build',
     'image:build',
+    'js:build'
+]);
+
+gulp.task('build-full', [
+    'html:build',
+    'style:build',
+    'image:build',
     'js:build',
+    'libs:build',
     'fonts:build'
 ]);
 
@@ -139,3 +157,4 @@ gulp.task('watch', function(){
 
 
 gulp.task('default', ['build', 'server', 'watch']);
+gulp.task('full', ['build-full', 'server', 'watch']);
