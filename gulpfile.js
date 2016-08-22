@@ -1,6 +1,6 @@
 'use strict';
 
-//npm i --save-dev gulp gulp-watch gulp-autoprefixer gulp-uglify gulp-sass gulp-sourcemaps gulp-rigger gulp-minify-css gulp-csscomb gulp-imagemin imagemin-pngquant browser-sync rimraf gulp-typograf
+//npm i --save-dev gulp gulp-watch gulp-autoprefixer gulp-uglify gulp-sass gulp-sourcemaps gulp-rigger gulp-minify-css gulp-csscomb gulp-imagemin imagemin-pngquant browser-sync rimraf gulp-typograf gulp-merge-media-queries
 
 var gulp = require('gulp'),
     watch = require('gulp-watch'),
@@ -14,6 +14,7 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     browserSync = require("browser-sync"),
+    svgo = require('gulp-svgo'),
     typograf = require('gulp-typograf'),
     rimraf = require('rimraf'),
     reload = browserSync.reload;
@@ -25,6 +26,7 @@ var path = {
         libs: 'web/js/libs',
         css: 'web/css/',
         img: 'web/img/',
+        svg: 'web/img/svg',
         fonts: 'web/fonts/'
     },
     src: {
@@ -33,6 +35,7 @@ var path = {
         libs: 'src/js/libs/**/*.*',
         style: 'src/sass/main.scss',
         img: 'src/img/**/*.*',
+        svg: 'src/img/svg/*.svg',
         fonts: 'src/fonts/**/*.*'
     },
     watch: {
@@ -41,6 +44,7 @@ var path = {
         libs: 'src/js/libs/**/*.*',
         style: 'src/sass/**/*.scss',
         img: 'src/img/**/*.*',
+        svg: 'src/img/svg/*.svg',
         fonts: 'src/fonts/**/*.*'
     },
     clean: './web'
@@ -83,6 +87,9 @@ gulp.task('style:build', function () {
         }))
         .pipe(autoprefixer())
         .pipe(csscomb())
+        .pipe(mmq({
+            log: true
+        }))
         //.pipe(cssmin())
         //.pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.css))
@@ -111,6 +118,13 @@ gulp.task('image:build', function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('svg:build', function () {
+    gulp.src(path.src.svg)
+        .pipe(svgo())
+        .pipe(gulp.dest(path.build.svg))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('libs:build', function() {
     return gulp.src(path.src.libs)
         .pipe(gulp.dest(path.build.libs))
@@ -125,13 +139,16 @@ gulp.task('build', [
     'html:build',
     'style:build',
     'image:build',
-    'js:build'
+    'svg:build',
+    'js:build',
+    'libs:build'
 ]);
 
 gulp.task('build-full', [
     'html:build',
     'style:build',
     'image:build',
+    'svg:build',
     'js:build',
     'libs:build',
     'fonts:build'
