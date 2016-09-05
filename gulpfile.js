@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     svgo = require('gulp-svgo'),
     typograf = require('gulp-typograf'),
     rimraf = require('rimraf'),
+    mmq = require('gulp-merge-media-queries'),
     reload = browserSync.reload;
 
 var path = {
