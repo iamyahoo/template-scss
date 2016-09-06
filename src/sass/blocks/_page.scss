@@ -1,4 +1,29 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+  min-width: 320px;
+  width: 100%;
+  min-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .page {
   flex-grow: 1;
-  padding-bottom: 100px;
+}
+
+.page-main {}
+
+.page__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1920px;
+  min-width: 300px;
+  margin: 0 auto;
 }

@@ -1,20 +1,22 @@
-//= html/_head.html
-//= html/_header.html
-
-<style>
-    body{
-        text-align: center;
-    }
-    img{
-        width: 300px;
-    }
-    h1{
-        font-family: sans-serif;
-        font-size: 50px;
-    }
-    
-</style>
-<h1>template</h1>
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    //= html/_head.html
+    <link rel="stylesheet" type="text/css" href="js/libs/jquery.slick/slick.css">
+    <title>Template</title>
+</head>
+<body>
+<div class="page-container">
+    //= html/_header.html
+    <main class="page page-main">
+        <div class="page__inner">
+            <section class="page-item">
+                <h1 style="text-align: center;">HEADER</h1>
+            </section>
+        </div>
+    </main>
+    //= html/_footer.html
+</div>
 //= html/_scripts.html
-//= html/_footer.html
+</body>
+</html>
