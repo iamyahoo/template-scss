@@ -1,3 +1,12 @@
 .footer {
-  min-width: 100%;  
+  @extend .layout-padding;
+  background-color: $color-gray-20;
+}
+
+.footer__inner {
+  @extend .layout-inner;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
 }

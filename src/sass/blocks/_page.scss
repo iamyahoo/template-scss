@@ -7,23 +7,27 @@
   min-width: 320px;
   width: 100%;
   min-height: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  background-color: $color-gray-5;
 }
 
 .page {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
-.page-main {}
-
 .page__inner {
+  @extend .layout-inner;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  width: 100%;
-  max-width: 1920px;
-  min-width: 300px;
-  margin: 0 auto;
+  flex-grow: 1;
+  background-color: $color-gray-10;
+}
+
+.page__item {
+  @extend .layout-padding;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  background-color: $color-blue-10;
 }

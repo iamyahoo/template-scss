@@ -21,19 +21,6 @@ body {
   color: $font-color_dark;
 }
 
-.page-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-width: 980px;
-  min-height: 100%;
-}
-
-.container {
-  width: 980px;
-  margin: 0 auto;
-}
-
 a {
   transition: color, .2s;
   
